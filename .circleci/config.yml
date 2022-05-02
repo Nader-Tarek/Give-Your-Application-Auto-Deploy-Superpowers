@@ -139,7 +139,7 @@ jobs:
           command: |
             aws ec2 describe-instances \
             --query 'Reservations[*].Instances[*].PublicIpAddress' \
-            --output text 
+            --output text \
             --filter Name=tag:Name,Values="backend-${CIRCLE_WORKFLOW_ID:0:7}" >> ~/project/.circleci/ansible/inventory.txt
       - run:
           name: ensuring ip is written to anisble's inventory
@@ -149,6 +149,29 @@ jobs:
           root: ~/
           paths:
             - project/.circleci/ansible/inventory.txt
+      - destroy-environment:
+          workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
+
+  configure-infrastructure:
+    docker:
+      - image: "python:3.7-slim"
+    steps:
+      - checkout
+      - add_ssh_keys:
+          fingerprints: [ "e0:a9:1b:18:c0:29:93:0b:0b:a4:a9:f0:b3:0a:2f:f5" ]
+      - run:
+          name: Installing dependencies
+          command: |
+            apt -y update
+            apt -y install tar gzip openssh-client
+            pip install ansible awscli
+      - attach_workspace:
+          at: ~/workspace/
+      - run:
+          name: Configure server
+          command: |
+            cd .circleci/ansible
+            ansible-playbook -i ~/workspace/inventory.txt configure-server.yml
       - destroy-environment:
           workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
 
@@ -170,3 +193,5 @@ workflows:
           filters:
             branches:
               only: [master]
+      - configure-infrastructure:
+          requires: [deploy-infrastructure]
