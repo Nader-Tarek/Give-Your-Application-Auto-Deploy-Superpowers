@@ -45,14 +45,9 @@ jobs:
       - run:
           name: Build front-end
           command: |
-            pwd
-            ls
             cd frontend
             npm install
             npm run build
-            cd ~
-            pwd
-            ls
       - save_cache:
           paths: [frontend/node_modules]
           key: frontend-build
@@ -313,4 +308,6 @@ workflows:
       - run-migrations:
           requires: [configure-infrastructure]
       - deploy-frontend:
+          requires: [run-migrations]
+      - deploy-backend:
           requires: [run-migrations]
