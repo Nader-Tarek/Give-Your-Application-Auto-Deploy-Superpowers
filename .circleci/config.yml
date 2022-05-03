@@ -44,8 +44,8 @@ jobs:
           keys: [frontend-build]
       - run:
         name: Build front-end
-          command: |
-            env
+        command: |
+          env
       - run:
           name: Build front-end
           command: |
