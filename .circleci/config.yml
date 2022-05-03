@@ -190,6 +190,7 @@ jobs:
           command: |
             cd .circleci/ansible
             ansible-playbook -i ~/workspace/inventory.txt configure-server.yml
+            echo $TYPEORM_ENTITIES
       - destroy-environment:
           workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
 
@@ -270,6 +271,7 @@ jobs:
       - run:
           name: Deploy
           command: |
+            echo $TYPEORM_ENTITIES
             cd backend
             npm i
             npm run build
@@ -319,10 +321,10 @@ jobs:
             else
               exit 1
             fi
-      #- destroy-environment:
-          #workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
-      #- revert-migrations:
-          #workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
+      - destroy-environment:
+          workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
+      - revert-migrations:
+          workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
 
 workflows:
   default:
