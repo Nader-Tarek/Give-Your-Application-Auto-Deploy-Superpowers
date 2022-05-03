@@ -17,6 +17,10 @@
     cd ~/backend
     npm install
 
+- name: "Install dependencies for project"
+  shell: |
+    cp ~/.env ~/backend/
+
 - name: "Executing node"
   shell: |
     cd ~/backend

@@ -270,6 +270,7 @@ jobs:
       - run:
           name: Deploy
           command: |
+            aws s3 cp s3://credentials-udapeople/.env ~/
             cd backend
             npm i
             npm run build
