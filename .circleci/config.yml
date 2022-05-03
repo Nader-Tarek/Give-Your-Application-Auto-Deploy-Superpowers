@@ -42,8 +42,8 @@ jobs:
       - checkout
       - restore_cache:
           keys: [frontend-build]
-       run:
-          name: Build front-end
+      - run:
+        name: Build front-end
           command: |
             env
       - run:
