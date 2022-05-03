@@ -39,11 +39,6 @@ jobs:
     docker:
       - image: circleci/node:13.8.0
     steps:
-      - run:
-          name: Configure server
-          command: |
-            echo $TYPEORM_ENTITIES
-            echo $TYPEORM_MIGRATIONS
       - checkout
       - restore_cache:
           keys: [frontend-build]
@@ -143,6 +138,7 @@ jobs:
       - run:
           name: Ensure back-end infrastructure exists
           command: |
+            echo $AWS_DEFAULT_REGION
             aws cloudformation deploy \
             --template-file .circleci/files/backend.yml \
             --stack-name "udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}" \
