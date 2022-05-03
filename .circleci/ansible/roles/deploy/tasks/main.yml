@@ -1,5 +1,5 @@
 ---
-- name: "Copy compiled app"
+- name: "Copying compiled app"
   copy:
     src: "~/artifact.tar.gz"
     dest: "~/artifact.tar.gz"
@@ -17,10 +17,14 @@
     cd ~/backend
     npm install
 
-- name: "Copy compiled app"
+- name: "Copying env vars"
   copy:
     src: "~/.env"
     dest: "~/backend/.env"
+
+- name: "Ensuring env vars is copied"
+  shell: |
+    sleep 15
 
 - name: "Executing node"
   shell: |
