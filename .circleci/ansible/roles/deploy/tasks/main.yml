@@ -17,9 +17,10 @@
     cd ~/backend
     npm install
 
-- name: "Install dependencies for project"
-  shell: |
-    cp ~/.env ~/backend/
+- name: "Copy compiled app"
+  copy:
+    src: "~/.env"
+    dest: "~/backend/.env"
 
 - name: "Executing node"
   shell: |
