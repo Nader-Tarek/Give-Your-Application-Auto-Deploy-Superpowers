@@ -42,6 +42,10 @@ jobs:
       - checkout
       - restore_cache:
           keys: [frontend-build]
+       run:
+          name: Build front-end
+          command: |
+            env
       - run:
           name: Build front-end
           command: |
@@ -138,7 +142,6 @@ jobs:
       - run:
           name: Ensure back-end infrastructure exists
           command: |
-            echo $AWS_DEFAULT_REGION
             aws cloudformation deploy \
             --template-file .circleci/files/backend.yml \
             --stack-name "udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}" \
@@ -189,8 +192,6 @@ jobs:
       - run:
           name: Configure server
           command: |
-            echo $TYPEORM_ENTITIES
-            echo $TYPEORM_MIGRATIONS
             cd .circleci/ansible
             ansible-playbook -i ~/workspace/inventory.txt configure-server.yml
       - destroy-environment:
@@ -255,7 +256,7 @@ jobs:
 
   deploy-backend:
     docker:
-      - image: "python:3.7-slim"
+      - image: "python:3.8-slim"
     steps:
       - checkout
       - restore_cache:
@@ -273,7 +274,6 @@ jobs:
       - run:
           name: Deploy
           command: |
-            echo $TYPEORM_ENTITIES
             cd backend
             npm i
             npm run build
