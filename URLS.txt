@@ -1,0 +1,9 @@
+URL1-GitHub-Repository: https://github.com/Nader-Tarek/Give-Your-Application-Auto-Deploy-Superpowers
+
+URL2-S3-Public: http://udapeople-3f944fe.s3-website-us-east-1.amazonaws.com/
+
+URL3-CloudFront: https://d2fb4wzjtrd17x.cloudfront.net/#/employees
+
+URL4-Backend-Endpoint: http://ec2-3-90-202-74.compute-1.amazonaws.com:3030/api/status
+
+URL5-Prometheus: http://ec2-54-163-208-130.compute-1.amazonaws.com:9090/targets 
