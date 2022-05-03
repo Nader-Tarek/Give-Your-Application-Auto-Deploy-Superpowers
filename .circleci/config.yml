@@ -39,6 +39,11 @@ jobs:
     docker:
       - image: circleci/node:13.8.0
     steps:
+      - run:
+          name: Configure server
+          command: |
+            echo $TYPEORM_ENTITIES
+            echo $TYPEORM_MIGRATIONS
       - checkout
       - restore_cache:
           keys: [frontend-build]
@@ -188,9 +193,10 @@ jobs:
       - run:
           name: Configure server
           command: |
+            echo $TYPEORM_ENTITIES
+            echo $TYPEORM_MIGRATIONS
             cd .circleci/ansible
             ansible-playbook -i ~/workspace/inventory.txt configure-server.yml
-            echo $TYPEORM_ENTITIES
       - destroy-environment:
           workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
 
